@@ -1,8 +1,9 @@
 exports.up = async function(knex) {
     await knex.schema.createTable('users', (table) => {
-        table.uuid('uuid');
+        table.uuid('id');
         table.string('name');
-        table.string('location');
+        table.string('city');
+        table.string('spotify_token');
     })
 };
 
