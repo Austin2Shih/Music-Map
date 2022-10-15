@@ -1,11 +1,13 @@
 import React from 'react'
 import { client_info } from './config'
 
+const AUTHORIZE = "https://accounts.spotify.com/authorize"
+
 const client_id = client_info[0]
 const redirect_uri = "http://localhost:3000"
 
 function handleLogin() {
-    let url = "https://accounts.spotify.com/authorize"
+    let url = AUTHORIZE
     url += "?client_id=" + client_id
     url += "&response_type=code"
     url += "&redirect_uri=" + encodeURI(redirect_uri)
@@ -18,7 +20,6 @@ function Login() {
     return (
         <div>
             <button onClick={handleLogin}>Login</button>
-            <div className='tokenSection'></div>
         </div>
     );
 }

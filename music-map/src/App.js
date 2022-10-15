@@ -1,30 +1,21 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { client_info } from './config';
+import callApi from './token/callApi';
 
 import Login from './Login';
 import Home from './Home';
 import './App.css';
 
-const AUTHORIZE = "https://accounts.spotify.com/authorize"
+
 const TOKEN = "https://accounts.spotify.com/api/token";
-const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
-const DEVICES = "https://api.spotify.com/v1/me/player/devices";
-const PLAY = "https://api.spotify.com/v1/me/player/play";
-const PAUSE = "https://api.spotify.com/v1/me/player/pause";
-const NEXT = "https://api.spotify.com/v1/me/player/next";
-const PREVIOUS = "https://api.spotify.com/v1/me/player/previous";
 const PLAYER = "https://api.spotify.com/v1/me/player";
-const TRACKS = "https://api.spotify.com/v1/playlists/{{PlaylistId}}/tracks";
-const CURRENTLYPLAYING = "https://api.spotify.com/v1/me/player/currently-playing";
-const SHUFFLE = "https://api.spotify.com/v1/me/player/shuffle";
 
 const client_id = client_info[0]
 const client_secret = client_info[1]
 const redirect_uri = "http://localhost:3000"
 
 function DisplaySection({access_token}) {
-    console.log(access_token)
     if (access_token == null) {
         return (
             <div><Login /></div>
@@ -85,10 +76,8 @@ function App() {
     
     function callAuthorizationApi(body) {
         let request = new XMLHttpRequest()
-        request.open("POST", "https://accounts.spotify.com/api/token", true)
+        request.open("POST", TOKEN, true)
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-        // request.setRequestHeader('Authorization', 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')))
-        // console.log(new Buffer(client_id + ':' + client_secret).toString('base64'))
         request.send(body)
         request.onload = handleAuthorizationResponse
     }
@@ -96,8 +85,6 @@ function App() {
     function handleAuthorizationResponse() {
         if (this.status === 200) {
             var data = JSON.parse(this.responseText)
-            console.log(data)
-            console.log(data.access_token)
             if (data.access_token !== undefined) {
                 updateAccessToken(data.access_token)
             }
@@ -111,30 +98,20 @@ function App() {
         }
     }
 
-    function callApi(method, url, body, callback) {
-        let xhr = new XMLHttpRequest()
-        xhr.open(method, url, true)
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token)
-        xhr.send(body)
-        xhr.onload = callback
+    function currentlyPlaying() {
+        callApi(access_token, "GET", PLAYER + "?market=US", null, handleCurrentlyPlayingResponse);
     }
 
-    function currentlyPlaying(){
-        callApi( "GET", PLAYER + "?market=US", null, handleCurrentlyPlayingResponse);
-    }
-
-    function handleCurrentlyPlayingResponse(){
-        if ( this.status == 200 ){
+    function handleCurrentlyPlayingResponse() {
+        if (this.status === 200) {
             var data = JSON.parse(this.responseText);
-            console.log(data);
-            if ( data.item != null ){
+            if (data.item != null) {
                 console.log(data.item)
             }
-        } else if ( this.status == 204 ){
+        } else if (this.status === 204) {
             console.log("No song currently playing");
             alert("No song currently playing");
-        } else if ( this.status == 401 ){
+        } else if (this.status === 401) {
             refreshAccessToken()
         } else {
             console.log(this.responseText);
