@@ -8,18 +8,20 @@ const db = require('knex')(connection);
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type User {
-    uuid: ID
+    id: ID
     name: String
-    location: String
+    city: String
+    spotify_token: String
   }
 
   type Query {
     getUsers: [User]
+    getClosestUsers(city: String!): [User]
   }
 
   type Mutation {
-    createUser(id: String!, name: String, location: String): User
-    deleteUser(name: String): Boolean
+    createUser(id: String!, name: String, city: String): User
+    deleteUser(name: String!): Boolean
   }
 `;
 
@@ -31,11 +33,14 @@ const resolvers = {
       console.log(res)
       return res;
     },
+    getClosestUsers: async (_, { city }, { dataSources }) => {
+      return await db('users').where({city}).limit(10);
+    }
   },
   Mutation: {
-    createUser: async (_, { location, name }, { dataSources }) => {
-      await db('users').insert({name, location})
-      return await db('users').where({name: name}).first();
+    createUser: async (_, { name, city }, { dataSources }) => {
+      await db('users').insert({name, city})
+      return await db('users').where({name}).first();
     },
     deleteUser: async (_, { name }, { dataSources }) => {
       return await db('users').where({name}).del();

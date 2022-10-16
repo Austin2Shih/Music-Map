@@ -5,9 +5,16 @@ import { client_info } from './config';
 import Login from './Login';
 import Home from './Home';
 import './App.css';
+import Feed from './components/feed'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-const TOKEN = "https://accounts.spotify.com/api/token"
-const PLAYER = "https://api.spotify.com/v1/me/player"
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache(),
+});
+
+const PLAYER = "https://api.spotify.com/v1/me/player";
+const CURRENTLYPLAYING = "https://api.spotify.com/v1/me/player/currently-playing";
 
 const client_id = client_info[0]
 const client_secret = client_info[1]
@@ -127,10 +134,13 @@ function App() {
     }
 
     return (
+      <ApolloProvider client={client}>
         <div className="App">
             <DisplaySection access_token={access_token} />
             <button onClick={currentlyPlaying}>click</button>
+            <Feed></Feed>
         </div>
+      </ApolloProvider>
     );
 }
 
