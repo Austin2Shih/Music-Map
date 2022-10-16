@@ -91,7 +91,8 @@ const resolvers = {
   User: {
     current_song: async (user) => {
       if (user.access_token === null) {
-        return null;
+        const dummyName = `Song# ${Math.floor(Math.random() * 10000)}`;
+        return dummyName;
       } else {
         const song = await getCurrentSong(user.id, user.access_token, user.refresh_token);
         return song;
