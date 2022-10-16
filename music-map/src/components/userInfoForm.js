@@ -1,34 +1,35 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
-import { test_publishable, test_secret } from '../config'
+import React from 'react'
+import { useState, useEffect } from 'react';
+// import { test_publishable, test_secret } from '../config'
 import { Stack, Autocomplete, TextField, Box } from '@mui/material';
-import Radar from 'radar-sdk-js';
+// import Radar from 'radar-sdk-js';
 
-Radar.initialize(test_secret)
+// Radar.initialize(test_secret)
+
+const cities = ["Davis", "Sacramento", "San Francisco", "San Jose", "Los Angeles", "Fremont", "San Diego", "Irvine", "Oakland", "Palo Alto"]
 
 const UserInfoForm = () => {
-  const [places, setPlaces] = useState([])
-  const [inputValue, setInputValue] = useState("")
+  // const [places, setPlaces] = useState([])
+  // const [inputValue, setInputValue] = useState("")
+  const [value, setValue] = useState(cities[0])
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   loadPlaces()
+  // }, []);
 
-    loadPlaces()
-  }, []);
-
-  const loadPlaces = async () => {
-    console.log(inputValue)
-    Radar.autocomplete({
-      query: inputValue,
-      limit: 10
-    }, function(err, result) {
-      if (!err) {
-        console.log(result)
-        setPlaces(result.addresses)
-      }
-    })
-    .then()
-    console.log(places)
-  }
+  // const loadPlaces = async () => {
+  //   console.log(inputValue)
+  //   Radar.autocomplete({
+  //     query: inputValue,
+  //     limit: 10
+  //   }, function(err, result) {
+  //     if (!err) {
+  //       console.log(result)
+  //       setPlaces(result.addresses)
+  //     }
+  //   })
+  //   console.log(places)
+  // }
 
   return (
     <>
@@ -36,29 +37,27 @@ const UserInfoForm = () => {
         <Stack spacing={2} width='250px'>
           <Autocomplete
             id="place search"
-            getOptionLabel={(places) => {
-              if (places.city != null) {
-                return places.city
-              } else {
-                return places.country
-              }
-            }}
-            options={places}
-            // value={value}
-            inputValue={inputValue}
-            onInputChange={e => {
-              setInputValue(() => e.target.value)
-              loadPlaces()
-            }}
-            // sx={{width: 300}}
-            // isOptionEqualToValue={(option, value) => (
-            //   option.addresses.city === value.addresses.city
+            // getOptionLabel={(places) => {
+            //   if (places.city != null) {
+            //     return places.city
+            //   } else {
+            //     return places.country
+            //   }
+            // }}
+            // options={places}
+            // inputValue={inputValue}
+            // onInputChange={e => {
+            //   setInputValue(() => e.target.value)
+            //   loadPlaces()
+            // }}
+            // renderOption={(props, places) => (
+            //   <Box component="li" {...props} key={places.formattedAddress}>
+            //     {places.city}
+            //   </Box>
             // )}
-            renderOption={(props, places) => (
-              <Box component="li" {...props} key={places.formattedAddress}>
-                {places.city}
-              </Box>
-            )}
+            options={cities}
+            value={value}
+            onChange={(event, newValue) => setValue(newValue)}
             renderInput={(params) => <TextField {...params} label='Search for a place' />}
           />
         </Stack>
