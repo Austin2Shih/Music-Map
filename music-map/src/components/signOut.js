@@ -8,11 +8,11 @@ const SignOutButton = () => {
     setAuth(false)
   }
   return (<>
-    <div className='wrapper'>
+    <div className='sign-out-wrapper'>
       <button className='sign-out' onClick={signOut}><BiExit size={40} /></button>
     </div>
     <style>{`
-      .wrapper {
+      .sign-out-wrapper {
         height: 100%;
         width: 100vw;
       }
