@@ -7,6 +7,7 @@ import useCurrentUser from "../hooks/getCurrentUser";
 
 function Home() {
     const user = useCurrentUser();
+
     return (
         <div>
             <SignOutButton></SignOutButton>
