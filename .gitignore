@@ -104,3 +104,4 @@ dist
 .tern-port
 server/knexfile.js
 server/knexfile.js
+/server/knexfile.js
