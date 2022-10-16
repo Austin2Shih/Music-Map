@@ -8,26 +8,34 @@ const db = require('knex')(connection);
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type User {
-    id: ID
+    id: String!
     name: String
     city: String
-    spotify_token: String
+    location: String
+    access_token: String
+    refresh_token: String
   }
 
   type Query {
+    findUser(id: String!): User
     getUsers: [User]
     getClosestUsers(city: String!): [User]
   }
 
   type Mutation {
-    createUser(id: String!, name: String, city: String): User
-    deleteUser(name: String!): Boolean
+    createUser(id: String!, name: String, city: String, location: String, access_token: String, refresh_token: String): User
+    updateUser(id: String!, name: String, city: String, location: String, access_token: String, refresh_token: String): User
+    deleteUser(id: String!): Boolean
   }
 `;
 
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
+    findUser: async (_, { id }, { dataSources }) => {
+      const user = await db('users').where({id}).first();
+      return user? user: null;
+    },
     getUsers: async () => {
       res = await db('users');
       console.log(res)
@@ -38,12 +46,23 @@ const resolvers = {
     }
   },
   Mutation: {
-    createUser: async (_, { name, city }, { dataSources }) => {
-      await db('users').insert({name, city})
-      return await db('users').where({name}).first();
+    updateUser: async (_, { id, name, city, location, access_token, refresh_token }, { dataSources }) => {
+      const user =  await db('users').where({id}).first();
+      console.log(user)
+      if (user) {
+        await db('users').update({id, name, city, location, access_token, refresh_token}).where({id})
+      } else {
+        await db('users').insert({id, name, city, location, access_token, refresh_token})
+      }
+      return await db('users').where({id}).first();
+
     },
-    deleteUser: async (_, { name }, { dataSources }) => {
-      return await db('users').where({name}).del();
+    createUser: async (_, { id, name, city, location, access_token, refresh_token }, { dataSources }) => {
+      await db('users').insert({id, name, city, location, access_token, refresh_token})
+      return await db('users').where({ id }).first();
+    },
+    deleteUser: async (_, { id }, { dataSources }) => {
+      return await db('users').where({ id }).del();
     }
   }
 };
