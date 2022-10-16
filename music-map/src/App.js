@@ -13,8 +13,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const TOKEN = "https://accounts.spotify.com/api/token";
 const PLAYER = "https://api.spotify.com/v1/me/player";
-const CURRENTLYPLAYING = "https://api.spotify.com/v1/me/player/currently-playing";
 
 const client_id = client_info[0]
 const client_secret = client_info[1]
@@ -104,12 +104,12 @@ function App() {
     }
 
     function callApi(method, url, body, callback) {
-        let xhr = new XMLHttpRequest()
-        xhr.open(method, url, true)
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token)
-        xhr.send(body)
-        xhr.onload = callback
+        let request = new XMLHttpRequest()
+        request.open(method, url, true)
+        request.setRequestHeader('Content-Type', 'application/json')
+        request.setRequestHeader('Authorization', 'Bearer ' + access_token)
+        request.send(body)
+        request.onload = callback
     }
 
     function currentlyPlaying(){
