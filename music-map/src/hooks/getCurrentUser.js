@@ -1,8 +1,6 @@
-import useFetch from "./useFetch";
-
 const useCurrentUser = () => {
     const user = localStorage['user'];
-    return (user) ? user : null;
+    return (user) ? JSON.parse(user) : null;
 }
 
 export default useCurrentUser;

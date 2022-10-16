@@ -4,8 +4,6 @@ import SideBar from "./sidebar";
 import useCurrentUser from "../hooks/getCurrentUser";
 
 function Home() {
-    const user = useCurrentUser();
-
     return (<>
         <div className='home-page'>
             <SideBar></SideBar>
@@ -23,9 +21,8 @@ function Home() {
             }
             .home-container {
                 width: 100vw;
-                height: 100vh;
+                height: 80vh;
                 max-width: var(--maxWidth);
-                max-height: var(--maxHeight);
                 background-color: var(--background-secondary);
                 border-radius: var(--borderRadius);
                 box-shadow: var(--box-shadow);

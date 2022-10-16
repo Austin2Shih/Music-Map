@@ -12,11 +12,6 @@ const SignOutButton = () => {
       <button className='sign-out' onClick={signOut}><BiExit size={40} /></button>
     </div>
     <style>{`
-      .sign-out-wrapper {
-        height: 100%;
-        width: 100vw;
-      }
-
       .sign-out {
         right: 3rem;
         top: 3rem;

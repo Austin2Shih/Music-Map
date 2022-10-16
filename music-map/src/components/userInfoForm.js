@@ -19,6 +19,7 @@ const UserInfoForm = () => {
   const [value, setValue] = useState()
   const [useUpdateUser, { data, loading, error }] = useMutation(updateUser)
   const user = useCurrentUser()
+  console.log(user)
 
   // useEffect(() => {
   //   loadPlaces()
@@ -44,24 +45,6 @@ const UserInfoForm = () => {
         <Stack spacing={2} width='250px'>
           <Autocomplete
             id="place search"
-            // getOptionLabel={(places) => {
-            //   if (places.city != null) {
-            //     return places.city
-            //   } else {
-            //     return places.country
-            //   }
-            // }}
-            // options={places}
-            // inputValue={inputValue}
-            // onInputChange={e => {
-            //   setInputValue(() => e.target.value)
-            //   loadPlaces()
-            // }}
-            // renderOption={(props, places) => (
-            //   <Box component="li" {...props} key={places.formattedAddress}>
-            //     {places.city}
-            //   </Box>
-            // )}
             options={cities}
             value={value}
             onChange={(event, newValue) => {
@@ -89,6 +72,7 @@ const UserInfoForm = () => {
           flex-direction: column;
           align-items: center;
         }
+
       `}</style>
     </>
   )
