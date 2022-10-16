@@ -119,10 +119,26 @@ function LoginButton() {
         console.log(data);
     }
 
-    return (
+    return (<>
         <div>
-            <button onClick={handleLogin}>Login</button>
+            <button className="login-button" onClick={handleLogin}>Login</button>
         </div>
+        <style>{`
+            .login-button {
+                background-color: var(--loginButtonBackground);
+                border: none;
+                width: 100px;
+                height: 40px;
+                border-radius: var(--borderRadius);
+                color: var(--text-secondary);
+            }
+            .login-button:hover {
+                cursor: pointer;
+            }
+        
+        `}</style>
+    </>
+
     );
 }
   
