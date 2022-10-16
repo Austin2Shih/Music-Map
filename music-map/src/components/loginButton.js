@@ -30,6 +30,7 @@ function LoginButton() {
     }, []);
 
     function onPageLoad() {
+        console.log("page load")
         //if authorization code in url
         if (window.location.search.length > 0) {
             handleRedirect();

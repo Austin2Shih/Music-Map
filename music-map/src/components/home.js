@@ -1,5 +1,6 @@
 import React from "react";
 import SignOutButton from './signOut';
+import UserInfoForm from "./userInfoForm";
 
 import useCurrentUser from "../hooks/getCurrentUser";
 
@@ -9,9 +10,9 @@ function Home() {
     return (
         <div>
             <SignOutButton></SignOutButton>
-            this is home
-            {user && JSON.stringify(user)}
-
+            <div>this is home</div>
+            <UserInfoForm />
+            <div>{user && JSON.stringify(user)}</div>
         </div>
     );
 }
