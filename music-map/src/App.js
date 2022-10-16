@@ -7,6 +7,7 @@ import Home from './Home';
 import './App.css';
 import Feed from './components/feed'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import UserInfoForm from './components/userInfoForm';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -139,6 +140,7 @@ function App() {
             <DisplaySection access_token={access_token} />
             <button onClick={currentlyPlaying}>click</button>
             <Feed></Feed>
+            <UserInfoForm></UserInfoForm>
         </div>
       </ApolloProvider>
     );
