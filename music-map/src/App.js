@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { client_info } from './config';
-import callApi from './token/callApi';
 
 import Login from './Login';
 import Home from './Home';
 import './App.css';
 
-
-const TOKEN = "https://accounts.spotify.com/api/token";
-const PLAYER = "https://api.spotify.com/v1/me/player";
+const TOKEN = "https://accounts.spotify.com/api/token"
+const PLAYER = "https://api.spotify.com/v1/me/player"
 
 const client_id = client_info[0]
 const client_secret = client_info[1]
 const redirect_uri = "http://localhost:3000"
 
 function DisplaySection({access_token}) {
+    console.log(access_token)
     if (access_token == null) {
         return (
             <div><Login /></div>
@@ -54,7 +53,6 @@ function App() {
             const urlParams = new URLSearchParams(queryString)
             code = urlParams.get('code')
         }
-        console.log(code)
         return code;
     }
     
@@ -98,20 +96,29 @@ function App() {
         }
     }
 
-    function currentlyPlaying() {
-        callApi(access_token, "GET", PLAYER + "?market=US", null, handleCurrentlyPlayingResponse);
+    function callApi(method, url, body, callback) {
+        let xhr = new XMLHttpRequest()
+        xhr.open(method, url, true)
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token)
+        xhr.send(body)
+        xhr.onload = callback
     }
 
-    function handleCurrentlyPlayingResponse() {
-        if (this.status === 200) {
-            var data = JSON.parse(this.responseText);
-            if (data.item != null) {
+    function currentlyPlaying(){
+        callApi( "GET", PLAYER + "?market=US", null, handleCurrentlyPlayingResponse);
+    }
+
+    function handleCurrentlyPlayingResponse(){
+        if ( this.status === 200 ){
+            var data = JSON.parse(this.responseText)
+            if ( data.item != null ){
                 console.log(data.item)
             }
-        } else if (this.status === 204) {
+        } else if ( this.status === 204 ){
             console.log("No song currently playing");
             alert("No song currently playing");
-        } else if (this.status === 401) {
+        } else if ( this.status === 401 ){
             refreshAccessToken()
         } else {
             console.log(this.responseText);
