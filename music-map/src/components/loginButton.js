@@ -164,7 +164,6 @@ function LoginButton() {
         <div>
             <button onClick={handleLogin}>Login</button>
             <button onClick={currentlyPlaying}>click</button>
-            <div className='tokenSection'></div>
         </div>
     );
 }
