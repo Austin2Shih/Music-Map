@@ -12,9 +12,12 @@ body {
 html {
     --background-primary: #d7d8db;
     --background-secondary: white;
-    --loginButtonBackground: #828aa1;
+    --loginButtonBackground: #1ab054;
+    --sidebar-color: #343f42;
     --text-primary: black;
     --text-secondary: white;
+
+    --fontBigButton: 22px;
 
     --box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 

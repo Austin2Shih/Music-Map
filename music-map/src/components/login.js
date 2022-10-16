@@ -29,6 +29,7 @@ const Login = () => {
         flex-direction: column;
         text-align: center;
         justify-content: center;
+        gap: var(--largeSpacer);
       }
     `}</style>
   </>)

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import { client_info } from '../config'
 import { AuthContext } from '../App'
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { updateUser } from '../graphql/mutations'
+import { SlSocialSpotify } from 'react-icons/sl'
 
 const client_id = client_info[0]
 const client_secret = client_info[1]
@@ -121,19 +122,35 @@ function LoginButton() {
 
     return (<>
         <div>
-            <button className="login-button" onClick={handleLogin}>Login</button>
+            <button className="login-button" onClick={handleLogin}>
+                <div className='button-aligner'>
+                    <SlSocialSpotify style={{fontSize: '32px'}}></SlSocialSpotify>
+                    <p>Login with spotify</p>
+                </div>
+
+            </button>
         </div>
         <style>{`
             .login-button {
                 background-color: var(--loginButtonBackground);
                 border: none;
-                width: 100px;
-                height: 40px;
+                width: 300px;
+                height: 60px;
                 border-radius: var(--borderRadius);
                 color: var(--text-secondary);
             }
             .login-button:hover {
                 cursor: pointer;
+            }
+            .button-aligner {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
+            }
+            .button-aligner>p {
+                font-size: var(--fontBigButton);
             }
         
         `}</style>
