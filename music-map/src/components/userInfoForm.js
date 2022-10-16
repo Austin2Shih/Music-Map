@@ -46,9 +46,9 @@ const UserInfoForm = () => {
           <Autocomplete
             id="place search"
             options={cities}
-            value={value}
             onChange={(event, newValue) => {
               setValue(newValue)
+              console.log(user.id)
               useUpdateUser({ 
                 variables: {
                     id: user.id,
@@ -70,7 +70,9 @@ const UserInfoForm = () => {
         .autocomplete {
           display: flex;
           flex-direction: column;
+          justify-content: center;
           align-items: center;
+          max-height: 90%;
         }
 
       `}</style>
