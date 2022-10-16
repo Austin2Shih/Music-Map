@@ -27,7 +27,6 @@ function App() {
             <AuthContext.Provider value={{auth, setAuth}}>
                 <div className="App">
                     <LandingPage />
-                    <Feed />
                 </div>
             </AuthContext.Provider>
         </ApolloProvider>

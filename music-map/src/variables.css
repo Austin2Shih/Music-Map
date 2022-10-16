@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    font-family: 'poppins';
+}
+
+body {
+    margin: 0;
+    background-color: var(--background-primary);
+}
+
+html {
+    --background-primary: #d7d8db;
+    --background-secondary: white;
+    --loginButtonBackground: #828aa1;
+    --text-primary: black;
+    --text-secondary: white;
+
+    --box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+
+    --outerPadding: 24px;
+
+    --maxWidth: 692px;
+    --maxHeight: 564px;
+
+    --borderRadius: 8px;
+
+    --tiniestSpacer: 4px;
+    --tinierSpacer: 8px;
+    --tinySpacer: 12px;
+    --smallSpacer: 18px;
+    --spacer: 24px;
+    --largeSpacer: 48px;
+    --largerSpacer: 64px;
+    --hugeSpacer: 180px;
+
+    --fontSmall: 0.8rem;
+    --fontMedium: 1rem;
+    --fontSmallHeader: 0.9rem;
+    --fontHeader: 1.2rem;
+    --fontButton: 1.4rem;
+    --fontHuge: 3.4rem;
+
+    --tabletBreakPoint: 1024px;
+}
+
+h1, h2, h3, h4, p {
+    margin: 0;
+}
+
+h3 {
+    font-weight: 700;
+    font-size: var(--fontSmall);
+    letter-spacing: 0.06em;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+h4 {
+    font-weight: 500;
+    font-size: var(--fontHeader);
+    letter-spacing: 0.06em;
+}
+
+p {
+    font-style: normal;
+    font-weight: 300;
+    font-size: var(--fontSmall);
+    letter-spacing: 0.06em;
+}
+
+.button {
+    margin: 0;
+    padding: 0;
+    border-radius: var(--borderRadius);
+    font-family: 'poppins';
+}
+@media (max-width: 1024px) {
+    html {
+        --maxWidth: 100%;
+    }
+}
+@media (max-width: 664px) {
+    html {
+        --fontSmall: 0.75rem;
+        --fontMedium: 0.84rem;
+        --fontSmallHeader: 0.78rem;
+        --fontHeader: 0.9rem;
+        --fontButton: 1.4rem;
+        --fontHuge: 2.1rem;
+
+        --projectImagePercentage: 100%;
+        --projectTextPercentage: 100%;
+    }
+}

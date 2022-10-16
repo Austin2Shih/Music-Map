@@ -4,7 +4,7 @@ import { getClosestUsers } from '../graphql/queries.js';
 
 const Feed = () => {
   const { data, loading, error } = useQuery(getClosestUsers, {
-    variables: {city: 'Davis, CA'}
+    variables: {city: 'Davis'}
   });
 
   if (loading) return 'Submitting...';
