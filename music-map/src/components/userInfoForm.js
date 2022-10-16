@@ -7,19 +7,11 @@ import Radar from 'radar-sdk-js';
 Radar.initialize(test_secret)
 
 const UserInfoForm = () => {
-  // const data = fetch("https://api.radar.io/v1/search/autocomplete?query=brooklyn+roasting", {
-  //   method: 'GET',
-  //   headers: {
-  //     Authorization: test_secret,
-  //   },
-  // }).then(async (res) => {
-  //   console.log(await res.json())
-  // })
-
   const [places, setPlaces] = useState([])
   const [inputValue, setInputValue] = useState("")
 
   useEffect(() => {
+
     loadPlaces()
   }, []);
 
@@ -34,6 +26,7 @@ const UserInfoForm = () => {
         setPlaces(result.addresses)
       }
     })
+    .then()
     console.log(places)
   }
 
@@ -61,11 +54,11 @@ const UserInfoForm = () => {
             // isOptionEqualToValue={(option, value) => (
             //   option.addresses.city === value.addresses.city
             // )}
-            // renderOption={(props, places) => (
-            //   <Box component="li" {...props} key={places.formattedAddress}>
-            //     {places.city}
-            //   </Box>
-            // )}
+            renderOption={(props, places) => (
+              <Box component="li" {...props} key={places.formattedAddress}>
+                {places.city}
+              </Box>
+            )}
             renderInput={(params) => <TextField {...params} label='Search for a place' />}
           />
         </Stack>

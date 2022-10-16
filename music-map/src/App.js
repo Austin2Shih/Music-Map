@@ -6,7 +6,7 @@ import './App.css';
 import LandingPage from './components/landingPage';
 import Feed from './components/feed';
 import useCurrentUser from './hooks/getCurrentUser';
-// import UserInfoForm from './components/userInfoForm';
+import UserInfoForm from './components/userInfoForm';
 
 
 const client = new ApolloClient({
@@ -30,7 +30,7 @@ function App() {
         <div className="App">
           <LandingPage></LandingPage>
           <Feed></Feed>
-          {/* <UserInfoForm></UserInfoForm> */}
+          <UserInfoForm></UserInfoForm>
         </div>
       </AuthContext.Provider>
     </ApolloProvider>
