@@ -1,4 +1,5 @@
 import React, {useContext} from 'react'
+import { BiExit } from 'react-icons/bi'
 import { AuthContext } from '../App';
 const SignOutButton = () => {
   const {setAuth} = useContext(AuthContext)
@@ -8,10 +9,12 @@ const SignOutButton = () => {
   }
   return (<>
     <div>
-      <button onClick={signOut}>sign out</button>
+      <button className='sign-out' onClick={signOut}><BiExit size={50} /></button>
     </div>
     <style>{`
-    
+      .sign-out {
+        
+      }
     `}</style>
   </>)
 }

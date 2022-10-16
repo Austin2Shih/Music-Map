@@ -2,21 +2,27 @@ import React from 'react'
 import { useQuery } from '@apollo/client';
 import { getClosestUsers } from '../graphql/queries.js';
 
-const Feed = () => {
+const Feed = ({value}) => {
   const { data, loading, error } = useQuery(getClosestUsers, {
-    variables: {city: 'Davis, CA'}
+    variables: {city: value}
   });
 
   if (loading) return 'Submitting...';
-  if (error) return `Submission error! ${error.message}`;
+  if (error) return 'No city selected!';
 
   return (
     <>
       <div className='test'>
-          {JSON.stringify(data)}
+        <ul>
+          {data.getClosestUsers.map((item) => (
+            <li>{item.name} from {item.city} is listening to {item.current_song}!</li>
+          ))}
+        </ul>
       </div>
       <style>{`
-        .test {
+        .test ul {
+          list-style: none;
+          text-align: left;
         }
       `}</style>
     </>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Stack, Autocomplete, TextField } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { updateUser } from '../graphql/mutations';
@@ -7,6 +7,8 @@ import useCurrentUser from '../hooks/getCurrentUser';
 // import { test_publishable, test_secret } from '../config'
 // import Radar from 'radar-sdk-js';
 
+import Feed from './feed';
+
 // Radar.initialize(test_secret)
 
 const cities = ["Davis", "Sacramento", "San Francisco", "San Jose", "Los Angeles", "Fremont", "San Diego", "Irvine", "Oakland", "Palo Alto"]
@@ -14,6 +16,7 @@ const cities = ["Davis", "Sacramento", "San Francisco", "San Jose", "Los Angeles
 const UserInfoForm = () => {
   // const [places, setPlaces] = useState([])
   // const [inputValue, setInputValue] = useState("")
+  const [value, setValue] = useState()
   const [useUpdateUser, { data, loading, error }] = useMutation(updateUser)
   const user = useCurrentUser()
 
@@ -37,7 +40,7 @@ const UserInfoForm = () => {
 
   return (
     <>
-      <div>
+      <div className='autocomplete'>
         <Stack spacing={2} width='250px'>
           <Autocomplete
             id="place search"
@@ -60,7 +63,9 @@ const UserInfoForm = () => {
             //   </Box>
             // )}
             options={cities}
+            value={value}
             onChange={(event, newValue) => {
+              setValue(newValue)
               useUpdateUser({ 
                 variables: {
                     id: user.id,
@@ -75,9 +80,15 @@ const UserInfoForm = () => {
             renderInput={(params) => <TextField {...params} label='Search for a place' />}
           />
         </Stack>
+
+        <Feed value={value} />
       </div>
       <style>{`
-      
+        .autocomplete {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
       `}</style>
     </>
   )
