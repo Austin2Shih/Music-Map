@@ -7,6 +7,7 @@ import Home from './Home';
 import './App.css';
 import Feed from './components/feed'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import UserInfoForm from './components/userInfoForm';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -14,7 +15,6 @@ const client = new ApolloClient({
 });
 
 const PLAYER = "https://api.spotify.com/v1/me/player";
-const CURRENTLYPLAYING = "https://api.spotify.com/v1/me/player/currently-playing";
 
 const client_id = client_info[0]
 const client_secret = client_info[1]
@@ -122,16 +122,16 @@ function App() {
     }
 
     function handleCurrentlyPlayingResponse(){
-        if ( this.status == 200 ){
+        if ( this.status === 200 ){
             var data = JSON.parse(this.responseText);
             console.log(data);
-            if ( data.item != null ){
+            if ( data.item !== null ){
                 console.log(data.item)
             }
-        } else if ( this.status == 204 ){
+        } else if ( this.status === 204 ){
             console.log("No song currently playing");
             alert("No song currently playing");
-        } else if ( this.status == 401 ){
+        } else if ( this.status === 401 ){
             refreshAccessToken()
         } else {
             console.log(this.responseText);
@@ -145,6 +145,7 @@ function App() {
             <DisplaySection access_token={access_token} />
             <button onClick={currentlyPlaying}>click</button>
             <Feed></Feed>
+            <UserInfoForm></UserInfoForm>
         </div>
       </ApolloProvider>
     );
