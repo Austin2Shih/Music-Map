@@ -44,28 +44,10 @@ const UserInfoForm = () => {
         <Stack spacing={2} width='250px'>
           <Autocomplete
             id="place search"
-            // getOptionLabel={(places) => {
-            //   if (places.city != null) {
-            //     return places.city
-            //   } else {
-            //     return places.country
-            //   }
-            // }}
-            // options={places}
-            // inputValue={inputValue}
-            // onInputChange={e => {
-            //   setInputValue(() => e.target.value)
-            //   loadPlaces()
-            // }}
-            // renderOption={(props, places) => (
-            //   <Box component="li" {...props} key={places.formattedAddress}>
-            //     {places.city}
-            //   </Box>
-            // )}
             options={cities}
-            value={value}
             onChange={(event, newValue) => {
               setValue(newValue)
+              console.log(user.id)
               useUpdateUser({ 
                 variables: {
                     id: user.id,
@@ -87,7 +69,9 @@ const UserInfoForm = () => {
         .autocomplete {
           display: flex;
           flex-direction: column;
+          justify-content: center;
           align-items: center;
+          max-height: 90%;
         }
       `}</style>
     </>
