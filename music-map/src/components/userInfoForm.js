@@ -27,7 +27,6 @@ const UserInfoForm = () => {
             options={cities}
             onChange={(event, newValue) => {
               setValue(newValue)
-              console.log(user.id)
               useUpdateUser({ 
                 variables: {
                     id: user.id,
@@ -52,7 +51,6 @@ const UserInfoForm = () => {
           height: 80%;
           justify-content: space-between;
         }
-
       `}</style>
     </>
   )

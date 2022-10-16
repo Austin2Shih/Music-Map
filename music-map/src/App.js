@@ -4,7 +4,6 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import './App.css';
 import LandingPage from './components/landingPage';
-import Feed from './components/feed';
 import useCurrentUser from './hooks/getCurrentUser';
 
 const client = new ApolloClient({
