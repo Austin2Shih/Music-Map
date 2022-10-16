@@ -1,57 +1,74 @@
-import React from 'react'
-import useFetch from '../hooks/useFetch'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
 import { test_publishable, test_secret } from '../config'
-import { TextField } from '@mui/material';
-import { Autocomplete } from '@mui/material';
+import { Stack, Autocomplete, TextField, Box } from '@mui/material';
+import Radar from 'radar-sdk-js';
+
+Radar.initialize(test_secret)
 
 const UserInfoForm = () => {
-  // const {data, loading, error} = useFetch("https://api.radar.io/v1/search/autocomplete?query=brooklyn+roasting", {
+  // const data = fetch("https://api.radar.io/v1/search/autocomplete?query=brooklyn+roasting", {
   //   method: 'GET',
-  //   body: JSON.stringify({
-  //       Authorization: test_secret,
-  //   }),
   //   headers: {
-  //       'Content-type': 'application/json; charset=UTF-8'
+  //     Authorization: test_secret,
   //   },
+  // }).then(async (res) => {
+  //   console.log(await res.json())
   // })
 
-  const data = fetch("https://api.radar.io/v1/search/autocomplete?query=brooklyn+roasting", {
-    method: 'GET',
-    headers: {
-        Authorization: test_secret,
-    },
-  }).then(async (res) => {
-    console.log(await res.json())
-  })
+  const [places, setPlaces] = useState([])
+  const [inputValue, setInputValue] = useState("")
 
-  const options = [
-    { label: 'The Godfather', id: 1 },
-    { label: 'Pulp Fiction', id: 2 },
-  ];
-  // if (loading) return "loading..."
-  // if (error) return error
+  useEffect(() => {
+    loadPlaces()
+  }, []);
+
+  const loadPlaces = async () => {
+    console.log(inputValue)
+    Radar.autocomplete({
+      query: inputValue,
+      limit: 10
+    }, function(err, result) {
+      if (!err) {
+        console.log(result)
+        setPlaces(result.addresses)
+      }
+    })
+    console.log(places)
+  }
+
   return (
     <>
       <div>
-        <form>
-          <label for="name">name</label>
-          <input type="text" id="name" name="name"></input>
-        </form>
-        <select>
-          <option value="fruit">Fruit</option>
-          <option value="vegetable">Vegetable</option>
-          <option value="meat">Meat</option>
-        </select>
-        {
-            data && JSON.stringify(data)
-        }
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={options}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Movie" />}
-        />
+        <Stack spacing={2} width='250px'>
+          <Autocomplete
+            id="place search"
+            getOptionLabel={(places) => {
+              if (places.city != null) {
+                return places.city
+              } else {
+                return places.country
+              }
+            }}
+            options={places}
+            // value={value}
+            inputValue={inputValue}
+            onInputChange={e => {
+              setInputValue(() => e.target.value)
+              loadPlaces()
+            }}
+            // sx={{width: 300}}
+            // isOptionEqualToValue={(option, value) => (
+            //   option.addresses.city === value.addresses.city
+            // )}
+            // renderOption={(props, places) => (
+            //   <Box component="li" {...props} key={places.formattedAddress}>
+            //     {places.city}
+            //   </Box>
+            // )}
+            renderInput={(params) => <TextField {...params} label='Search for a place' />}
+          />
+        </Stack>
       </div>
       <style>{`
       
