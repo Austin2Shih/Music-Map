@@ -3,9 +3,9 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      database: 'musicmap',
-      user: 'ashih',
-      password: '9257',
+      database: 'postgres',
+      user: 'brandonw504',
+      password: 'pciscsi',
       host:'localhost',
       port:5432
     },

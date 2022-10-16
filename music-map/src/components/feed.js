@@ -12,7 +12,7 @@ const Feed = ({value}) => {
 
   return (
     <>
-      <div className='test'>
+      <div className='list-wrapper'>
         <ul>
           {data.getClosestUsers.map((item) => (
             <li>{item.name} from {item.city} is listening to {item.current_song}!</li>
@@ -20,9 +20,25 @@ const Feed = ({value}) => {
         </ul>
       </div>
       <style>{`
-        .test ul {
+        .list-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: fit-content;
+          background-color: var(--background-secondary);
+          border: 1px solid var(--text-primary);
+          border-radius: 1rem;
+          margin-top: 3rem;
+          padding-right: 2rem;
+        }
+
+        .list-wrapper ul {
           list-style: none;
           text-align: left;
+        }
+
+        .list-wrapper ul li {
+          padding: 0.5rem;
         }
       `}</style>
     </>
