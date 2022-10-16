@@ -24,13 +24,13 @@ const typeDefs = gql`
   type Query {
     findUser(id: String!): User
     getUsers: [User]
-    getClosestUsers(city: String!): [User]
   }
 
   type Mutation {
     createUser(id: String!, name: String, city: String, location: String, access_token: String, refresh_token: String): User
     updateUser(id: String!, name: String, city: String, location: String, access_token: String, refresh_token: String): User
     deleteUser(id: String!): Boolean
+    getClosestUsers(city: String!): [User]
   }
 `;
 
@@ -109,9 +109,7 @@ const resolvers = {
       console.log(res)
       return res;
     },
-    getClosestUsers: async (_, { city }, { dataSources }) => {
-      return await db('users').where({city}).limit(10);
-    }
+
   },
   Mutation: {
     updateUser: async (_, { id, name, city, location, access_token, refresh_token }, { dataSources }) => {
@@ -131,6 +129,9 @@ const resolvers = {
     },
     deleteUser: async (_, { id }, { dataSources }) => {
       return await db('users').where({ id }).del();
+    },
+    getClosestUsers: async (_, { city }, { dataSources }) => {
+      return await db('users').where({city}).limit(10);
     }
   }
 };

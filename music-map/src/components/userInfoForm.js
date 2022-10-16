@@ -14,29 +14,9 @@ import Feed from './feed';
 const cities = ["Davis", "Sacramento", "San Francisco", "San Jose", "Los Angeles", "Fremont", "San Diego", "Irvine", "Oakland", "Palo Alto"]
 
 const UserInfoForm = () => {
-  // const [places, setPlaces] = useState([])
-  // const [inputValue, setInputValue] = useState("")
   const [value, setValue] = useState()
   const [useUpdateUser, { data, loading, error }] = useMutation(updateUser)
   const user = useCurrentUser()
-
-  // useEffect(() => {
-  //   loadPlaces()
-  // }, []);
-
-  // const loadPlaces = async () => {
-  //   console.log(inputValue)
-  //   Radar.autocomplete({
-  //     query: inputValue,
-  //     limit: 10
-  //   }, function(err, result) {
-  //     if (!err) {
-  //       console.log(result)
-  //       setPlaces(result.addresses)
-  //     }
-  //   })
-  //   console.log(places)
-  // }
 
   return (
     <>
@@ -62,15 +42,15 @@ const UserInfoForm = () => {
             renderInput={(params) => <TextField {...params} label='Search for a place' />}
           />
         </Stack>
-
         <Feed value={value} />
       </div>
       <style>{`
         .autocomplete {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           justify-content: center;
-          max-height: 70%;
+          height: 80%;
+          justify-content: space-between;
         }
 
       `}</style>

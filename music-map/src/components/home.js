@@ -8,6 +8,7 @@ function Home() {
         <div className='home-page'>
             <SideBar></SideBar>
             <div className='home-container'>
+                <h2>Check out what people are listening to!</h2>
                 <UserInfoForm />
             </div>
         </div>
@@ -30,7 +31,8 @@ function Home() {
                 flex-direction: column;
                 text-align: center;
                 justify-content: center;
-                gap: var(--largeSpacer);
+                gap: var(--smallSpacer);
+                padding: var(--largeSpacer);
             }
         
         `}</style>

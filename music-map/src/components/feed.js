@@ -1,19 +1,31 @@
-import React from 'react'
-import { useQuery } from '@apollo/client';
-import { getClosestUsers } from '../graphql/queries.js';
+import React, { useState, useEffect } from 'react'
+import { useQuery, useMutation } from '@apollo/client';
+import { getClosestUsers } from '../graphql/mutations.js';
+const MINUTE_MS = 10000;
 
 const Feed = ({value}) => {
-  const { data, loading, error } = useQuery(getClosestUsers, {
-    variables: {city: value}
-  });
+  const [useGetClosestUsers, { data, loading, error }] = useMutation(getClosestUsers);
 
-  if (loading) return 'Submitting...';
-  if (error) return 'No city selected!';
+  useEffect(() => {
+    const interval = setInterval(() => {
+      useGetClosestUsers({
+        variables: {
+          city: value
+        }
+      });
+    }, MINUTE_MS);
+    useGetClosestUsers({
+      variables: {
+        city: value
+      }
+    });
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [value])
 
   return (
     <>
       <div className='list-wrapper'>
-          {data.getClosestUsers.map((item, i) => (
+          {data && data.getClosestUsers.map((item, i) => (
             <div key={i}>
               <h3>{item.name}</h3>
               <p>{item.current_song}</p>
@@ -24,17 +36,16 @@ const Feed = ({value}) => {
         .list-wrapper {
           display: flex;
           flex-direction: column;
-          width: fit-content;
+          width: 360px;
           background-color: var(--background-secondary);
           border: 1px solid var(--text-primary);
           border-radius: 1rem;
-          margin-top: 3rem;
-          max-height: 50%;
+          max-height: 100%;
           overflow: scroll;
         }
 
         .list-wrapper div {
-          padding: 0.5rem 5rem 0.5rem 5rem;
+          padding: 0.2rem;
         }
       `}</style>
     </>

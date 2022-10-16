@@ -32,4 +32,18 @@ const deleteUser = gql`
     }
 `
 
-export {createUser, updateUser, deleteUser};
+const getClosestUsers = gql `
+    mutation GetClosestUsers($city: String!) {
+        getClosestUsers(city: $city) {
+            id
+            name
+            city
+            location
+            access_token
+            refresh_token
+            current_song
+        }
+    }
+`
+
+export {getClosestUsers, createUser, updateUser, deleteUser};
