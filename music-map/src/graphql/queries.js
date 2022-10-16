@@ -9,6 +9,7 @@ const findUsers = gql`
             location
             access_token
             refresh_token
+            current_song
         }
     }
 `
@@ -21,6 +22,7 @@ const getUsers = gql`
             location
             access_token
             refresh_token
+            current_song
         }
     }
 `
@@ -34,6 +36,7 @@ const getClosestUsers = gql `
             location
             access_token
             refresh_token
+            current_song
         }
     }
 `

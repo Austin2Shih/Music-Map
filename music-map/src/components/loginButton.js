@@ -4,8 +4,6 @@ import { AuthContext } from '../App'
 import { useQuery, useMutation } from '@apollo/client';
 import { updateUser } from '../graphql/mutations'
 
-const PLAYER = "https://api.spotify.com/v1/me/player";
-
 const client_id = client_info[0]
 const client_secret = client_info[1]
 const redirect_uri = "http://localhost:3000"
@@ -64,20 +62,11 @@ function LoginButton() {
         callAuthorizationApi(body)
     }
     
-    function refreshAccessToken() {
-        let body = "grant_type=refresh_token"
-        body += "&refresh_token=" + refresh_token
-        body += "&client_id=" + client_id
-        callAuthorizationApi(body)
-    }
-    
     function callAuthorizationApi(body) {
         let request = new XMLHttpRequest()
         request.open("POST", "https://accounts.spotify.com/api/token", true)
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
         request.send(body)
-        console.log("HERE")
-        console.log(body)
         request.onload = handleAuthorizationResponse
     }
     
@@ -115,54 +104,23 @@ function LoginButton() {
     }
 
     function updateDatabase(access_token, refresh_token) {
-        console.log("LOG")
         console.log(JSON.parse(localStorage['user']).id)
         useUpdateUser({ 
             variables: {
                 id: JSON.parse(localStorage['user']).id,
                 access_token,
                 refresh_token
-            }})
-        
-          if (loading) return 'Submitting...';
-          if (error) return `Submission error! ${error.message}`;
-          console.log(data);
-    }
-
-    function callApi(method, url, body, callback) {
-        let xhr = new XMLHttpRequest()
-        xhr.open(method, url, true)
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token)
-        xhr.send(body)
-        xhr.onload = callback
-    }
-
-    function currentlyPlaying(){
-        callApi( "GET", PLAYER + "?market=US", null, handleCurrentlyPlayingResponse);
-    }
-
-    function handleCurrentlyPlayingResponse(){
-        if ( this.status === 200 ){
-            var data = JSON.parse(this.responseText);
-            console.log(data);
-            if ( data.item !== null ){
-                console.log(data.item)
             }
-        } else if ( this.status === 204 ){
-            console.log("No song currently playing");
-            alert("No song currently playing");
-        } else if ( this.status === 401 ){
-            refreshAccessToken()
-        } else {
-            console.log(this.responseText);
-            alert(this.responseText);
-        }
+        })
+    
+        if (loading) return 'Submitting...';
+        if (error) return `Submission error! ${error.message}`;
+        console.log(data);
     }
+
     return (
         <div>
             <button onClick={handleLogin}>Login</button>
-            <button onClick={currentlyPlaying}>click</button>
             <div className='tokenSection'></div>
         </div>
     );
