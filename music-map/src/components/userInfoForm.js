@@ -19,7 +19,6 @@ const UserInfoForm = () => {
   const [value, setValue] = useState()
   const [useUpdateUser, { data, loading, error }] = useMutation(updateUser)
   const user = useCurrentUser()
-  console.log(user)
 
   // useEffect(() => {
   //   loadPlaces()
@@ -71,8 +70,7 @@ const UserInfoForm = () => {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          align-items: center;
-          max-height: 90%;
+          max-height: 70%;
         }
 
       `}</style>

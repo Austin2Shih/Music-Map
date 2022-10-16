@@ -13,8 +13,8 @@ const Feed = ({value}) => {
   return (
     <>
       <div className='list-wrapper'>
-          {data.getClosestUsers.map((item) => (
-            <div>
+          {data.getClosestUsers.map((item, i) => (
+            <div key={i}>
               <h3>{item.name}</h3>
               <p>{item.current_song}</p>
             </div>
