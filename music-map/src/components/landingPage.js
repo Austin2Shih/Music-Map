@@ -1,13 +1,13 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import Home from './home';
-import LoginButton from './loginButton';
+import Login from './login';
 import { AuthContext } from '../App'
 
 const LandingPage = () => {
   const { auth } = React.useContext(AuthContext)
   return (
     <>
-      {(!auth) ? <LoginButton></LoginButton> : <Home></Home>}
+      {(!auth) ? <Login></Login> : <Home></Home>}
     </>
   )
 }
