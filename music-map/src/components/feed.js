@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery, useMutation } from '@apollo/client';
-import { getClosestUsers } from '../graphql/mutations.js';
-const MINUTE_MS = 10000;
+import { useLazyQuery } from '@apollo/client';
+import { getClosestUsers as getClosestUsersQuery} from '../graphql/queries';
+const MINUTE_MS = 1000;
 
 const Feed = ({value}) => {
-  const [useGetClosestUsers, { data, loading, error }] = useMutation(getClosestUsers);
+  if (!value) value = "San Jose"
+  const [feedData, updateFeedData] = useState();
+  const [getClosestUsers, { loading, error, data }] = useLazyQuery(getClosestUsersQuery);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      useGetClosestUsers({
+    const interval = setInterval(async () => {
+      const res = await getClosestUsers({
         variables: {
           city: value
-        }
-      });
+        }, 
+        fetchPolicy: 'no-cache'
+      })
+      updateFeedData(res.data)
     }, MINUTE_MS);
-    useGetClosestUsers({
-      variables: {
-        city: value
-      }
-    });
-    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [value])
+
+    return () => clearInterval(interval);
+  }, [value]);
 
   return (
     <>
       <div className='list-wrapper'>
-          {data && data.getClosestUsers.map((item, i) => (
+          {feedData && feedData.getClosestUsers.map((item, i) => (
             <div key={i}>
-              <h3>{item.name}</h3>
+              <h3>{item.name || item.id}</h3>
               <p>{item.current_song}</p>
             </div>
           ))}

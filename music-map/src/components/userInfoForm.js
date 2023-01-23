@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Stack, Autocomplete, TextField } from '@mui/material';
 import { useMutation } from '@apollo/client';
-import { updateUser } from '../graphql/mutations';
+import { updateUser as updateUserMutation} from '../graphql/mutations';
 import useCurrentUser from '../hooks/getCurrentUser';
 // import { useState, useEffect } from 'react';
 // import { test_publishable, test_secret } from '../config'
@@ -11,11 +11,11 @@ import Feed from './feed';
 
 // Radar.initialize(test_secret)
 
-const cities = ["Davis", "Sacramento", "San Francisco", "San Jose", "Los Angeles", "Fremont", "San Diego", "Irvine", "Oakland", "Palo Alto"]
+const cities = ["Davis", "Sacramento", "San Francisco", "San Jose", "Los Angeles", "Fremont", "San Diego", "Irvine", "Oakland", "Palo Alto", "test city"]
 
 const UserInfoForm = () => {
   const [value, setValue] = useState()
-  const [useUpdateUser, { data, loading, error }] = useMutation(updateUser)
+  const [updateUser, { data, loading, error }] = useMutation(updateUserMutation)
   const user = useCurrentUser()
 
   return (
@@ -27,7 +27,7 @@ const UserInfoForm = () => {
             options={cities}
             onChange={(event, newValue) => {
               setValue(newValue)
-              useUpdateUser({ 
+              updateUser({ 
                 variables: {
                     id: user.id,
                     city: newValue,

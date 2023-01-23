@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { client_info } from '../config'
 import { AuthContext } from '../App'
 import { useMutation } from '@apollo/client';
-import { updateUser } from '../graphql/mutations'
+import { updateUser as updateUserMutation } from '../graphql/mutations'
 import { SlSocialSpotify } from 'react-icons/sl'
 
 const client_id = client_info[0]
@@ -24,7 +24,7 @@ function LoginButton() {
     const [refresh_token, updateRefreshToken] = useState()
     const { auth, setAuth } = React.useContext(AuthContext)
 
-    const [useUpdateUser, { data, loading, error }] = useMutation(updateUser);
+    const [updateUser, { data, loading, error }] = useMutation(updateUserMutation);
 
     useEffect(() => {
         onPageLoad();
@@ -107,8 +107,8 @@ function LoginButton() {
 
     function updateDatabase(access_token, refresh_token) {
         console.log(JSON.parse(localStorage['user']).id)
-        useUpdateUser({ 
-            variables: {
+        updateUser({
+            variables : {
                 id: JSON.parse(localStorage['user']).id,
                 access_token,
                 refresh_token
