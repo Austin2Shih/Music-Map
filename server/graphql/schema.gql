@@ -1,9 +1,0 @@
-  type User {
-    uuid: ID!
-    name: String
-    location: String
-  }
-
-  type Query {
-    getUsers: String
-  }

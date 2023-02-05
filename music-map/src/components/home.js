@@ -1,13 +1,21 @@
 import React from "react";
 import UserInfoForm from "./userInfoForm";
 import SideBar from "./sidebar";
-import useCurrentUser from "../hooks/getCurrentUser";
+import useUserLocation from "../hooks/useUserLocation";
 
 function Home() {
+    const { position, error } = useUserLocation();
+
     return (<>
         <div className='home-page'>
             <SideBar></SideBar>
             <div className='home-container'>
+                {error &&
+                    {error}
+                }
+                {position &&
+                    <p>{JSON.stringify(position)}</p>
+                }
                 <h2>Check out what people are listening to!</h2>
                 <UserInfoForm />
             </div>

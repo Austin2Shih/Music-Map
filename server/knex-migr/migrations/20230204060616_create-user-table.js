@@ -3,7 +3,8 @@ exports.up = async function(knex) {
         table.string('id').primary();
         table.string('name');
         table.string('city');
-        table.string('location');
+        table.float('latitude');
+        table.float('longitude');
         table.string('access_token');
         table.string('refresh_token');
     })

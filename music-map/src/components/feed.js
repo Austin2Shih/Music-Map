@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client';
 import { getClosestUsers as getClosestUsersQuery} from '../graphql/queries';
-const MINUTE_MS = 1000;
+const MINUTE_MS = 5000;
 
 const Feed = ({value}) => {
   if (!value) value = "San Jose"
@@ -20,7 +20,7 @@ const Feed = ({value}) => {
     }, MINUTE_MS);
 
     return () => clearInterval(interval);
-  }, [value]);
+  }, [value, getClosestUsers]);
 
   return (
     <>
